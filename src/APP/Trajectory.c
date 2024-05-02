@@ -35,7 +35,7 @@ void draw_path(char x[4][6]) {
 		    if(b==2)UART0_Transmitter('.'); //converts for example 513863 back to 51.3863
 
 		    delayMs(500);
-			if(x[n][m]!=0xffffffff) {
+			if(x[n][m]!=0xf) {
 				UART0_Transmitter(x[n][m]);										//IF data read from EEPROM is not null then send data
 				delayMs(250);
 			}

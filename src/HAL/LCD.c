@@ -84,7 +84,8 @@ void displayLine1(char* str)
 
 void displayLine2(char* str)
 {
-	LCD4bits_Cmd(0xC0);               //Force the cursor to beginning of 2st line
+	LCD4bits_Cmd(0xC0);
+	//Force the cursor to beginning of 2st line
 	delayMs(400);										//delay 500 ms for LCD (MCU is faster than LCD)
 	LCD_WriteString(str);					//Write the string on LCD
 	delayMs(400);										//Delay 500 ms to let the LCD diplays the data

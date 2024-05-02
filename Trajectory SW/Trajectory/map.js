@@ -6,7 +6,7 @@ var map = L.map('map').setView([51.505, -0.09], 13);
     }).addTo(map);
 
     // Define coordinates for the path
-    var latlngs = [ [48.864716,2.349014],[31.0,31.0],[40.0,40.0],[60.0,35.0],[55.751244,37.618423],[40.0,40.0],[60.0,35.0],[55.751244,37.618423],    ];
+    var latlngs = [ [30.1514,31.3346],[30.1514,31.3345],[30.1514,31.3346],[30.1515,31.3346],[30.1513,31.3346],[30.1513,31.3346],    ];
 
     // Create a polyline and add it to the map
     var polyline = L.polyline(latlngs, { color: 'red' }).addTo(map);

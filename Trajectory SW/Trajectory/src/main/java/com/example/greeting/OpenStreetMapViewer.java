@@ -49,7 +49,26 @@ class Point {
         this.x = x;
         this.y = y;
     }
-
+    public static boolean isDouble(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            return false;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if ((c < '0' || c > '9')&&(c!='.')) {
+                return false;
+            }
+        }
+        return true;
+    }
     @Override
     public String toString() {
         return "[" + x + "," + y + "],";

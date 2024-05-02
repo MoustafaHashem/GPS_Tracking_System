@@ -28,7 +28,7 @@ char* draw2 =			"drawing";  							    //Write any string you want to display on
 char myStg[5];
 int i=1;
 int l,m,n,p=0,k=1,cc;
-float totalS=0,totalD=0;  		// ###totD must store in eeprom too
+float totalS=0,totalD=0,totalD2=1;  		// ###totD must store in eeprom too
 uint32_t pui32Data[4];
 uint32_t pui32Read[4];
 char* print;
@@ -57,7 +57,7 @@ int main() {
 			displayLine2(str2);
 			EEPROMMassErase();						// ###here must clear all points in  eeprom
 			while(1){           
-			  delayMs(1500);              // ##delay bet points
+			  delayMs(1000);              // ##delay bet points
 				readData(); 								//read data from GPS (as explained in GPS.c)
 			  doFilter(); 								//filter read data from GPS (as explained in GPS.c)
 				totalD=totalD+calculatDesenation(getP2Long(),getP2Lat(),getP1Long(),getP1Lat()); /*add the new distance between P1(the newly reached point) and P2(last reached point/ point we last stopped at) to the total distance*/
@@ -79,12 +79,14 @@ int main() {
 				//explained in GPIO.c
 				set_led(totalD);
 
+
 //The following code is used to store data in EEPROM
 /*pui32Data is an array that holds four words(2 points) that later will be sent to be stored in EEPROM(in EEPROMProgram(pui32Data, p, sizeof(pui32Data)); )*/				
 /*In pui32Data , it holds four words at a time (0-->16) where each two words represent a point(latitude,longitude respectivelly) */
 /* 0-->4 lat of P1 , 4-->8 long of P1*/
 /*8-->12 lat of P1(in the following loop), 12-->16 long of P1 (in the following loop)*/
-				if((p!=64)&&(totalD>0)){
+				if((p!=64)&&(totalD>totalD2)){
+				    totalD2=totalD+13.5;                                                        // store point each 13.5 m
 					//store first point (lat,long) in the first two words in pui32Data
 				if(k%2!=0){
 				    pui32Data[0]=getP1Lat()*(1e4);   /*if latitude is received as 51.3863932 for example, then we multiply by 10^4 and take integer part only (513863) which later is converted back to (51,3863) in draw_path func in Trajectory.c */ 
@@ -111,7 +113,7 @@ int main() {
 		}
 				
 		
-		if((get_Switch_value(GPIO_SW2)==0)&&(totalD>100)){
+		if((get_Switch_value(GPIO_SW2)==0)){
 			LCD4bits_Cmd(0x01);																		//Clear the display
 			displayLine1(draw1);
 			displayLine2(draw2);			
@@ -138,6 +140,8 @@ int main() {
 			displayLine1("done");
 		  displayLine2("Thank you");
       LCD4bits_Cmd(0x01);                             //Clear the display
+      displayLine1(SW1);
+      displayLine2(close);
 			}
 	}
  }

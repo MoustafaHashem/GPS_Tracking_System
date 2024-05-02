@@ -30,6 +30,7 @@ public class App {
             System.exit(1);
             return;
         }
+
         StringBuilder str;
         // now we checked then after that we can receive  data
         while (true) {
@@ -71,14 +72,22 @@ public class App {
                 n7 = y[6].split(",");
                 n8 = y[7].split(",");
                 List<Point> pointList = new ArrayList<>();
-                pointList.add(new Point(Double.parseDouble(n1[0].trim()), Double.parseDouble(n1[1].trim())));
-                pointList.add(new Point(Double.parseDouble(n2[0].trim()), Double.parseDouble(n2[1].trim())));
-                pointList.add(new Point(Double.parseDouble(n3[0].trim()), Double.parseDouble(n3[1].trim())));
-                pointList.add(new Point(Double.parseDouble(n4[0].trim()), Double.parseDouble(n4[1].trim())));
-                pointList.add(new Point(Double.parseDouble(n5[0].trim()), Double.parseDouble(n5[1].trim())));
-                pointList.add(new Point(Double.parseDouble(n6[0].trim()), Double.parseDouble(n6[1].trim())));
-                pointList.add(new Point(Double.parseDouble(n7[0].trim()), Double.parseDouble(n7[1].trim())));
-                pointList.add(new Point(Double.parseDouble(n8[0].trim()), Double.parseDouble(n8[1].trim())));
+                if (Point.isDouble(n1[0]) && Point.isDouble(n1[1]))
+                    pointList.add(new Point(Double.parseDouble(n1[0].trim()), Double.parseDouble(n1[1].trim())));
+                if (Point.isDouble(n2[0]) && Point.isDouble(n2[1]))
+                    pointList.add(new Point(Double.parseDouble(n2[0].trim()), Double.parseDouble(n2[1].trim())));
+                if (Point.isDouble(n3[0]) && Point.isDouble(n3[1]))
+                    pointList.add(new Point(Double.parseDouble(n3[0].trim()), Double.parseDouble(n3[1].trim())));
+                if (Point.isDouble(n4[0]) && Point.isDouble(n4[1]))
+                    pointList.add(new Point(Double.parseDouble(n4[0].trim()), Double.parseDouble(n4[1].trim())));
+                if (Point.isDouble(n5[0]) && Point.isDouble(n5[1]))
+                    pointList.add(new Point(Double.parseDouble(n5[0].trim()), Double.parseDouble(n5[1].trim())));
+                if (Point.isDouble(n6[0]) && Point.isDouble(n6[1]))
+                    pointList.add(new Point(Double.parseDouble(n6[0].trim()), Double.parseDouble(n6[1].trim())));
+                if (Point.isDouble(n7[0]) && Point.isDouble(n7[1]))
+                    pointList.add(new Point(Double.parseDouble(n7[0].trim()), Double.parseDouble(n7[1].trim())));
+                if (Point.isDouble(n8[0]) && Point.isDouble(n8[1]))
+                    pointList.add(new Point(Double.parseDouble(n8[0].trim()), Double.parseDouble(n8[1].trim())));
                 // sent point to draw
                 OpenStreetMapViewer.writePointList(pointList);
                 File htmlFile = new File("index.html");
@@ -86,7 +95,8 @@ public class App {
                 // open browser to put point on them and connected it
                 Desktop.getDesktop().browse(htmlFile.toURI());
             } catch (Exception e) {
-                // Ignore exception
+                System.out.println("not enough points " + "\n please try again with more distance");
+                System.exit(0);
             }
 
         }
