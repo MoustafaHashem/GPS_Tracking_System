@@ -1,14 +1,3 @@
-[1]: https://github.com/topics/gps-data ""
-[2]: https://github.com/topics/gps ""
-[3]: https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/best-practices-for-projects ""
-[4]: https://github.com/topics/gps-tracking ""
-[5]: https://github.com/saiarlen/Vehicle-Theft-Detection-and-Tracking-System-using-Arduino-and-GSM-GPS-Complete ""
-[6]: https://microcontrollerslab.com/category/tiva-launchpad/ ""
-[7]: https://circuitdigest.com/microcontroller-projects/getting-started-with-tiva-c-series-tm4c123g-launchpad-from-texas-instruments ""
-[8]: https://github.com/mtayyip/Tiva-C-Series-TM4C123G-LaunchPad-GY-NEO6MV2-GPS-Module ""
-[9]: https://makezine.com/article/technology/5-cool-projects-powered-by-the-tiva-c-launchpad-board/ ""
-[10]: https://www.ti.com/tool/SW-EK-TM4C123GXL ""
-
 ---
 
 # GPS Tracking with Tiva C Series TM4C123G
