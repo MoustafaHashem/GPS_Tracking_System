@@ -13,19 +13,19 @@
 
 # GPS Tracking with Tiva C Series TM4C123G
 
-This project demonstrates GPS tracking using the **Tiva C Series TM4C123G LaunchPad**. The goal is to interface a GPS module (such as the **GY-NEO6MV2**) with the Tiva C board and extract location data.
+This project demonstrates GPS tracking using the **Tiva C Series TM4C123G LaunchPad**. The goal is to interface a GPS module (such as the **Ublox NEO-6m**) with the Tiva C board and extract location data.
 
 ## Features:
-- **GPS Module Integration**: Connect the GY-NEO6MV2 GPS module to the Tiva C LaunchPad.
+- **GPS Module Integration**: Connect the Ublox NEO-6m GPS module to the Tiva C LaunchPad.
 - **UART Communication**: Implement UART communication to receive NMEA sentences from the GPS module.
 - **Data Parsing**: Parse NMEA sentences to extract latitude, longitude, and other relevant information.
 - **Display**: Display real-time GPS data on an LCD or serial monitor.
-- **Position Logging**: Log GPS coordinates to an SD card or external memory.
+- **Position Logging**: Log GPS coordinates to an SD card or EEPROM.
 - **Mapping**: Integrate with mapping APIs (e.g., Google Maps) to visualize the tracked path.
 
 ## Hardware Requirements:
-- **Tiva C Series TM4C123G LaunchPad**
-- **GY-NEO6MV2 GPS Module**
+- **Tiva C Series TM4C123GH6PM LaunchPad**
+- **Ublox NEO-6m GPS Module**
 - Connecting wires
 - Optional: **LCD display**, **SD card module**
 
@@ -45,5 +45,4 @@ Feel free to explore and modify the code to suit your specific requirements. Hap
 - Mayar Walid Said &nbsp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;2100953
 - Michael George Naem &ensp; &ensp; &ensp;&ensp;2100709
 
-![ek-tm4c123gxl-angled](https://github.com/MoustafaHashem/GPS-Tracking-System-/assets/43302105/75308ee3-b1e8-437a-8abd-5147330bfe12)
 ![ek-tm4c123gxl-angled](https://github.com/MoustafaHashem/GPS_Tracking_System/assets/43302105/218e7517-adc4-4231-a40a-c2fe46573b4a)
