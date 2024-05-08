@@ -1,10 +1,6 @@
 #include "../../Services/TM4C123.h"    // Device header
-
+#include "../../Headers/MCAL/systick_Timer.h"
 #include "../../Headers/HAL/LCD.h"
-
-
-
-
 void LCD4bits_Init(void)
 {
     SYSCTL_RCGCGPIO_R |= 0x02;    //enable clock for PORTB
@@ -58,43 +54,29 @@ void LCD4bits_Data(unsigned char data)
 	delayUs(40);												//delay for LCD (MCU is faster than LCD)
 }
 
-void delayMs(int n)
-{  
-	volatile int i,j;             //volatile is important for variables incremented in code
-	for(i=0;i<n;i++)
-		for(j=0;j<3180;j++)         //delay for 1 msec
-		{}
-}
 
-void delayUs(int n)             
-{
-	volatile int i,j;							//volatile is important for variables incremented in code
-	for(i=0;i<n;i++)
-		for(j=0;j<3;j++)            //delay for 1 micro second
-		{}
-}
 
 void displayLine1(char* str)
 {
 	LCD4bits_Cmd(0x80);               //Force the cursor to beginning of 1st line
-	delayMs(400);										//delay 500 ms for LCD (MCU is faster than LCD)
+	delayMs(500);										//delay 500 ms for LCD (MCU is faster than LCD)
 	LCD_WriteString(str);					//Write the string on LCD
-	delayMs(400);										//Delay 500 ms to let the LCD diplays the data
+	delayMs(500);										//Delay 500 ms to let the LCD diplays the data
 }
 
 void displayLine2(char* str)
 {
 	LCD4bits_Cmd(0xC0);
 	//Force the cursor to beginning of 2st line
-	delayMs(400);										//delay 500 ms for LCD (MCU is faster than LCD)
+	delayMs(500);										//delay 500 ms for LCD (MCU is faster than LCD)
 	LCD_WriteString(str);					//Write the string on LCD
-	delayMs(400);										//Delay 500 ms to let the LCD diplays the data
+	delayMs(500);										//Delay 500 ms to let the LCD diplays the data
 }
 
 void displayWithCursor(char* str, char cursor)
 {
 	LCD4bits_Cmd(cursor);               //Force the cursor to beginning of 1st line
-	delayMs(400);										//delay 500 ms for LCD (MCU is faster than LCD)
+	delayMs(500);										//delay 500 ms for LCD (MCU is faster than LCD)
 	LCD_WriteString(str);					//Write the string on LCD
-	delayMs(400);										//Delay 500 ms to let the LCD diplays the data
+	delayMs(500);										//Delay 500 ms to let the LCD diplays the data
 }

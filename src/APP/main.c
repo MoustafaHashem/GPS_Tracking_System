@@ -13,18 +13,18 @@
 #include"driverlib/gpio.h"
 #include"driverlib/flash.h"
 #include"driverlib/eeprom.h"
+#include "../../Headers/MCAL/systick_Timer.h"
 #include <math.h>
 #include <stdio.h>
-
 char* welcome=	  "welcome ";
 char* SW1= 				"SW1 to start";
-char* SW2= 	"SW2 to print";
+char* SW2= 	"Enter U to print";
 char* str = 			"Distance= ";    							//Write any string you want to display on LCD
 char* str2 =			"AVGSpeed= ";  							  //Write any string you want to display on LCD
 char* close =			"Or turn off tiva";  					//Write any string you want to display on LCD
 char* draw1 =			"Trajectory";  							  //Write any string you want to display on LCD
 char* draw2 =			"drawing";  							    //Write any string you want to display on LCD
-
+char ss;
 char myStg[5];
 int i=1;
 int l,m,n,p=0,k=1,cc;
@@ -34,7 +34,9 @@ uint32_t pui32Read[4];
 char* print;
 char test[11];
 char f[4][6];
+
 int main() {
+
   //Initialization:                                                          
   SysCtlPeripheralEnable(SYSCTL_PERIPH_EEPROM0);
   EEPROMInit();
@@ -51,17 +53,21 @@ int main() {
 	displayLine2(SW2);
 	//**********************************************************************
 	while(1){
+	    ss=0;
 		    if(get_Switch_value(GPIO_SW1)==0){
+		        int kp=1;
 			LCD4bits_Cmd(0x01);						 //Clear the display
 			displayLine1(str);
 			displayLine2(str2);
 			EEPROMMassErase();						// ###here must clear all points in  eeprom
-			while(1){           
-			  delayMs(1000);              // ##delay bet points
-				readData(); 								//read data from GPS (as explained in GPS.c)
+			while(1){
+
+			  delayMs(8000);              // ##delay bet points
+			  readData(); 								//read data from GPS (as explained in GPS.c)
 			  doFilter(); 								//filter read data from GPS (as explained in GPS.c)
+			//  if(kp==1||!(getP2Long()==getP1Long()&& getP2Lat()==getP1Lat())){
 				totalD=totalD+calculatDesenation(getP2Long(),getP2Lat(),getP1Long(),getP1Lat()); /*add the new distance between P1(the newly reached point) and P2(last reached point/ point we last stopped at) to the total distance*/
-				
+			//	   kp++;
 				//Make the last point we reached as P2 for the next loop
 				setP2Long(getP1Long());			
 				setP2Lat(getP1Lat());			
@@ -85,19 +91,23 @@ int main() {
 /*In pui32Data , it holds four words at a time (0-->16) where each two words represent a point(latitude,longitude respectivelly) */
 /* 0-->4 lat of P1 , 4-->8 long of P1*/
 /*8-->12 lat of P1(in the following loop), 12-->16 long of P1 (in the following loop)*/
-				if((p!=64)&&(totalD>totalD2)){
-				    totalD2=totalD+13.5;                                                        // store point each 13.5 m
+				if((p!=64)){
 					//store first point (lat,long) in the first two words in pui32Data
 				if(k%2!=0){
-				    pui32Data[0]=getP1Lat()*(1e4);   /*if latitude is received as 51.3863932 for example, then we multiply by 10^4 and take integer part only (513863) which later is converted back to (51,3863) in draw_path func in Trajectory.c */ 
-				    pui32Data[1]=getP1Long()*(1e4);  //same as latitude
+		              delayMs(500);              // ##delay bet points
+				    pui32Data[0]=getP2Lat()*(1e4);   /*if latitude is received as 51.3863932 for example, then we multiply by 10^4 and take integer part only (513863) which later is converted back to (51,3863) in draw_path func in Trajectory.c */
+				    pui32Data[1]=getP2Long()*(1e4);  //same as latitude
 				}
 				//store following point (lat,long) in the last two words in pui32Data
 				else{
-				    pui32Data[2]=getP1Lat()*(1e4);
-				    pui32Data[3]=getP1Long()*(1e4);
+				    pui32Data[2]=getP2Lat()*(1e4);
+				    pui32Data[3]=getP2Long()*(1e4);
 				
 		            EEPROMProgram(pui32Data, p, sizeof(pui32Data)); /*Send the two points to EEPROM to be stored, after finishing the loop(when we break from it when sw1 is pressed) EEPROM will hold 8 points to later draw the trajectory*/
+		            pui32Data[0]=0;
+                    pui32Data[1]=0;
+                    pui32Data[2]=0;
+                    pui32Data[3]=0;
 		            p=p+16;																					//Move tto the next segment in EEPROM		
 				}
 			  k=k+1;
@@ -110,10 +120,14 @@ int main() {
 					break;
 				}
 			}
+			//}
 		}
-				
-		
-		if((get_Switch_value(GPIO_SW2)==0)){
+
+		if((UART0_FR_R & (1<<4)) == 0) {
+		    ss = UART0_Receiver();
+		}
+
+		if(ss=='U'){
 			LCD4bits_Cmd(0x01);																		//Clear the display
 			displayLine1(draw1);
 			displayLine2(draw2);			
@@ -138,10 +152,10 @@ int main() {
 			UART0_Transmitter('^');																//When this character is received by Intellij, it stops receiving points and satrts drawing trajectory
 			LCD4bits_Cmd(0x01);                            				//Clear the display
 			displayLine1("done");
-		  displayLine2("Thank you");
-      LCD4bits_Cmd(0x01);                             //Clear the display
-      displayLine1(SW1);
-      displayLine2(close);
+			displayLine2("Thank you");
+			LCD4bits_Cmd(0x01);                             //Clear the display
+			displayLine1(SW1);
+			displayLine2(close);
 			}
 	}
  }

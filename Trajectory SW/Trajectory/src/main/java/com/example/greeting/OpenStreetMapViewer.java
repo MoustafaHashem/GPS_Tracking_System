@@ -49,7 +49,7 @@ class Point {
         this.x = x;
         this.y = y;
     }
-    public static boolean isDouble(String str) {
+    public static boolean isDouble(String str) { // can replace with try and catch with parse double
         if (str == null) {
             return false;
         }

@@ -1,13 +1,14 @@
 package com.example.greeting;
-
+import  java.io.PrintWriter;
 import com.fazecast.jSerialComm.SerialPort;
 
 import java.awt.*;
 import java.io.File;
 
-
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class App {
     // here check for tiva is connected or not
@@ -28,39 +29,52 @@ public class App {
         } else {
             System.err.println("Failed to open " + portName);
             System.exit(1);
-            return;
+
         }
 
         StringBuilder str;
         // now we checked then after that we can receive  data
         while (true) {
             str = new StringBuilder();
+            chosenPort.setComPortParameters(9600,8,1,0);
+            chosenPort.setComPortTimeouts(chosenPort.TIMEOUT_NONBLOCKING,0,0);
+            chosenPort.openPort(20);
+            PrintWriter OUT=new PrintWriter(chosenPort.getOutputStream(),true);
+            Scanner in=new Scanner(System.in);
+            String t=in.next();
+            OUT.print(t);
+            OUT.flush();
+            if(t.compareTo("U") ==0){
             try {
                 while (true) {
                     byte[] readBuffer = new byte[1024];                                      //  allocate area to store data
                     int numBytesRead = chosenPort.readBytes(readBuffer, readBuffer.length);   // trim string to the size of data received
                     receivedData = new String(readBuffer, 0, numBytesRead);             // now data stored
+
                     if (!receivedData.isEmpty()) {                                             // check for receive data is empty or not
                         if (receivedData.contains("@")) {
+                            System.out.print("\n");
+
                             str.append("\n");
                         } else if (receivedData.contains("^")) {
+                            System.out.println(receivedData);
                             break;                                                             // when sent "^" stop adding point
                         } else {
                             str.append(receivedData);
-                            System.out.println(receivedData);
+                            System.out.print(receivedData);
                         }
                     }
                 }
                 // prepare point to draw
-                String[] n2;
-                String[] n1;
-                String[] n3;
-                String[] n4;
-                String[] n8;
-                String[] n5;
-                String[] n6;
-                String[] n7;
-                String[] y;
+                String[] n2=null;
+                String[] n1=null;
+                String[] n3=null;
+                String[] n4=null;
+                String[] n8=null;
+                String[] n5=null;
+                String[] n6=null;
+                String[] n7=null;
+                String[] y=null;
                 String s = String.valueOf(str);
                 y = s.split("\n");
                 n1 = y[0].split(",");
@@ -94,13 +108,12 @@ public class App {
                 System.out.println(htmlFile.toURI());
                 // open browser to put point on them and connected it
                 Desktop.getDesktop().browse(htmlFile.toURI());
+                System.exit(0);
             } catch (Exception e) {
                 System.out.println("not enough points " + "\n please try again with more distance");
                 System.exit(0);
-            }
+            }}
 
         }
-
-
     }
 }
