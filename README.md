@@ -27,11 +27,4 @@ This project demonstrates GPS tracking using the **Tiva C Series TM4C123G Launch
 
 Feel free to explore and modify the code to suit your specific requirements. Happy tracking! 🌐🛰️
 
-## **Team Members**
-- Moustafa Ahmed Hashem &nbsp; &nbsp; 2100467
-- Kareem Ehab Ibrahim &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2100913
-- Karen Maurice William &nbsp; &ensp; &ensp; &ensp;2100748
-- Mayar Walid Said &nbsp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;2100953
-- Michael George Naem &ensp; &ensp; &ensp;&ensp;2100709
-
 ![ek-tm4c123gxl-angled](https://github.com/MoustafaHashem/GPS_Tracking_System/assets/43302105/218e7517-adc4-4231-a40a-c2fe46573b4a)
